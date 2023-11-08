@@ -45,7 +45,7 @@ const JourneySearchForm = () => {
 
     axios
       .get(`http://localhost:3001/api/external-data?pathParams=${urlString}`)
-      .then((response) => console.log(response))
+      .then((response) => console.log(response.data))
       .catch((error) => console.error(error));
   };
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
+require('dotenv').config();
 
 const app = express();
 
@@ -10,13 +11,15 @@ app.use(cors());
 app.get("/api/external-data", (req, res) => {
   const { pathParams } = req.query;
   const apiURL = `http://api.rtt.io/api/v1/json/search/${pathParams}`;
+  const username = process.env.API_USERNAME;
+  const password = process.env.API_PASSWORD;
 
   axios
     .get(apiURL, {
       headers: {
-        Authorization: `Basic ${Buffer.from(
-          "rttapi_RGraDev:cc9a157b3aa0322416f754eef189caaf7c1b94e2",
-        ).toString("base64")}`,
+        Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString(
+          "base64",
+        )}`,
       },
     })
     .then((response) => {
@@ -31,3 +34,5 @@ app.get("/api/external-data", (req, res) => {
 app.listen(3001, () => {
   console.log("Proxy server is running on port 3001");
 });
+
+
