@@ -30,14 +30,23 @@ const JourneySearchForm = () => {
   const handleSearchJournies = (event) => {
     event.preventDefault();
     const currentDate = new Date();
-    const year = currentDate.getFullYear;
-    const month = currentDate.getMonth;
-    const day = currentDate.getDate;
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+    const day = currentDate.getDate().toString().padStart(2, "0");
 
     const origin = fields.origin_station;
     const destination = fields.destination_station;
 
-    const urlString = `api.rtt.io/api/v1/json/search/${origin}/to/${destination}/${year}/${month}/${day}`;
+    const urlString = `${origin}/to/${destination}/${year}/${month}/${day}/${fields.time.replace(
+      ":",
+      "",
+    )}`;
+    console.log(urlString);
+
+    axios
+      .get(`http://localhost:3001/api/external-data?pathParams=${urlString}`)
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error));
   };
 
   const handleFieldChange = (event) => {
