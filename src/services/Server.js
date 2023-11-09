@@ -1,32 +1,38 @@
+/* eslint-disable no-console */
+/* eslint-disable import/no-extraneous-dependencies */
+const dotenv = require("dotenv");
+const path = require("path");
+
+const envPath = path.resolve(__dirname, "../../.env");
+dotenv.config({ path: envPath });
+
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
-require('dotenv').config();
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/api/external-data", (req, res) => {
+app.get("/api/external-data/get-services", (req, res) => {
   const { pathParams } = req.query;
   const apiURL = `http://api.rtt.io/api/v1/json/search/${pathParams}`;
-  const username = process.env.API_USERNAME;
-  const password = process.env.API_PASSWORD;
 
   axios
     .get(apiURL, {
       headers: {
-        Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString(
-          "base64",
-        )}`,
+        Authorization: `Basic ${Buffer.from(
+          `${process.env.API_USERNAME}:${process.env.API_PASSWORD}`,
+        ).toString("base64")}`,
       },
     })
     .then((response) => {
-      res.json(response.data);
+      const responseData = response.data;
+      res.json(responseData);
     })
     .catch((error) => {
-      console.error("Error fetching data:", error);
+      console.log("Error fetching data:", error);
       res.status(500).json({ error: "Error Fetching Data" });
     });
 });
@@ -34,5 +40,3 @@ app.get("/api/external-data", (req, res) => {
 app.listen(3001, () => {
   console.log("Proxy server is running on port 3001");
 });
-
-

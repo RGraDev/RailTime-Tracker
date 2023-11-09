@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -44,8 +45,10 @@ const JourneySearchForm = () => {
     console.log(urlString);
 
     axios
-      .get(`http://localhost:3001/api/external-data?pathParams=${urlString}`)
-      .then((response) => console.log(response.data))
+      .get(
+        `http://localhost:3001/api/external-data/get-services?pathParams=${urlString}`,
+      )
+      .then((response) => console.log(response.data.services))
       .catch((error) => console.error(error));
   };
 
