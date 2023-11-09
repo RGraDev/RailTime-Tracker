@@ -5,7 +5,7 @@ import JourneySearchForm from "./JourneySearchForm";
 const App = () => {
   return (
     <div className="App">
-      Train Punctuality App
+      <h1>Train Punctuality App</h1>
       <JourneySearchForm />
     </div>
   );

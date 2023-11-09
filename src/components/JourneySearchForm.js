@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from "react";
 import axios from "axios";
+import SearchResults from "./SearchResults"; 
 
 const JourneySearchForm = () => {
   const initialState = {
@@ -27,6 +28,7 @@ const JourneySearchForm = () => {
   const timeOptions = generateTimeOptions();
 
   const [fields, setFields] = useState(initialState.fields);
+  const [searchResults, setSearchResults] = useState([]); 
 
   const handleSearchJournies = (event) => {
     event.preventDefault();
@@ -48,8 +50,10 @@ const JourneySearchForm = () => {
       .get(
         `http://localhost:3001/api/external-data/get-services?pathParams=${urlString}`,
       )
-      .then((response) => console.log(response.data.services))
-      .catch((error) => console.error(error));
+      .then((response) => {
+        setSearchResults(response.data.services);
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleFieldChange = (event) => {
@@ -101,6 +105,7 @@ const JourneySearchForm = () => {
           Search
         </button>
       </form>
+      {searchResults.length > 0 && <SearchResults services={searchResults} />}
     </div>
   );
 };
