@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from "react";
 import axios from "axios";
-import SearchResults from "./SearchResults"; 
+import SearchResults from "./SearchResults";
 
 const JourneySearchForm = () => {
   const initialState = {
@@ -28,7 +28,7 @@ const JourneySearchForm = () => {
   const timeOptions = generateTimeOptions();
 
   const [fields, setFields] = useState(initialState.fields);
-  const [searchResults, setSearchResults] = useState([]); 
+  const [searchResults, setSearchResults] = useState([]);
 
   const handleSearchJournies = (event) => {
     event.preventDefault();
