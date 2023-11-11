@@ -39,4 +39,6 @@
 
 ul {
   list-style: none;
+  margin: none;
+  padding: 0;
 }

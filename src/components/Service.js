@@ -5,7 +5,6 @@ const Service = ({ service }) => {
   return (
     <div className="Service">
       <ul>
-        <li>{service.serviceUid}</li>
         <li>
           Departs {service.locationDetail.description}:{" "}
           {service.locationDetail.gbttBookedDeparture} (Platform{" "}
@@ -15,7 +14,6 @@ const Service = ({ service }) => {
           Arrives at {service.locationDetail.destination[0].description}:{" "}
           {service.locationDetail.destination[0].publicTime}
         </li>
-        <li>Service operated by {service.atocName}</li>
       </ul>
     </div>
   );

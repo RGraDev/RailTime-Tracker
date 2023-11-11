@@ -44,7 +44,6 @@ const JourneySearchForm = () => {
       ":",
       "",
     )}`;
-    console.log(urlString);
 
     axios
       .get(
@@ -105,7 +104,7 @@ const JourneySearchForm = () => {
           Search
         </button>
       </form>
-      {searchResults.length > 0 && <SearchResults services={searchResults} />}
+      <SearchResults services={searchResults} />
     </div>
   );
 };
