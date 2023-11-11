@@ -1,7 +1,6 @@
 import { React, useState } from "react";
 import "../styles/App.css";
 import JourneySearchForm from "./JourneySearchForm";
-import SearchResults from "./SearchResults";
 import ServiceDetails from "./ServiceDetails";
 
 const App = () => {
