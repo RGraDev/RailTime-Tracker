@@ -2,8 +2,9 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 
-const ServiceDetails = ({ service }) => {
+const ServiceDetails = ({ fields, service }) => {
   const [details, setDetails] = useState(null);
+  const [latenessForDestination, setLatenessForDestination] = useState(null);
 
   useEffect(() => {
     const fetchServiceDetails = () => {
@@ -29,6 +30,17 @@ const ServiceDetails = ({ service }) => {
         )
         .then((response) => {
           setDetails(response.data);
+
+          const destinationDescription = fields.destination_station;
+          const destinationLocation = response.data.locations.find(
+            (location) => location.crs === destinationDescription,
+          );
+
+          if (destinationLocation) {
+            setLatenessForDestination(
+              destinationLocation.realtimeGbttArrivalLateness,
+            );
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -36,7 +48,7 @@ const ServiceDetails = ({ service }) => {
     };
 
     fetchServiceDetails();
-  }, [service]);
+  }, [service, fields.destination_station]);
 
   if (!details) {
     return null;
@@ -47,6 +59,11 @@ const ServiceDetails = ({ service }) => {
       <ul>
         <li>{details.serviceUid}</li>
         <li>Service operated by {details.atocName}</li>
+        <li>
+          {latenessForDestination !== undefined
+            ? `Train arrived ${latenessForDestination} minutes late`
+            : `On Time`}
+        </li>
       </ul>
     </div>
   );

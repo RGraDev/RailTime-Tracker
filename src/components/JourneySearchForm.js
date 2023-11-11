@@ -3,15 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import SearchResults from "./SearchResults";
 
-const JourneySearchForm = () => {
-  const initialState = {
-    fields: {
-      origin_station: "MAN",
-      destination_station: "LIV",
-      time: "12:00",
-    },
-  };
-
+const JourneySearchForm = ({ fields, setFields }) => {
   const generateTimeOptions = () => {
     const options = [];
     for (let hour = 0; hour < 24; hour += 1) {
@@ -27,7 +19,6 @@ const JourneySearchForm = () => {
 
   const timeOptions = generateTimeOptions();
 
-  const [fields, setFields] = useState(initialState.fields);
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearchJournies = (event) => {
@@ -69,10 +60,10 @@ const JourneySearchForm = () => {
           onChange={handleFieldChange}
         >
           <option key="LIV" value="LIV">
-            Liverpool
+            Liverpool Lime Street
           </option>
           <option key="MAN" value="MAN">
-            Manchester
+            Manchester Piccadilly
           </option>
         </select>
         <select
@@ -82,10 +73,10 @@ const JourneySearchForm = () => {
           onChange={handleFieldChange}
         >
           <option key="LIV" value="LIV">
-            Liverpool
+            Liverpool Lime Street
           </option>
           <option key="MAN" value="MAN">
-            Manchester
+            Manchester Piccadilly
           </option>
         </select>
         <select
@@ -104,7 +95,7 @@ const JourneySearchForm = () => {
           Search
         </button>
       </form>
-      {searchResults.length > 0 && <SearchResults services={searchResults} />}
+      {searchResults.length > 0 && <SearchResults services={searchResults} fields={fields} />}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Service from "./Service";
 import ServiceDetails from "./ServiceDetails";
 
-const SearchResults = ({ services }) => {
+const SearchResults = ({ services, fields }) => {
   const [expandedIndices, setExpandedIndices] = useState([]);
 
   const handleExpand = (index) => {
@@ -29,7 +29,7 @@ const SearchResults = ({ services }) => {
               : "View more details about this service"}
           </button>
           {expandedIndices.includes(index) && (
-            <ServiceDetails service={service} />
+            <ServiceDetails service={service} fields={fields} />
           )}
         </div>
       ))}
