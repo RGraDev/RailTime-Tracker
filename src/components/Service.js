@@ -10,10 +10,6 @@ const Service = ({ service }) => {
           {service.locationDetail.gbttBookedDeparture} (Platform{" "}
           {service.locationDetail.platform})
         </li>
-        <li>
-          Arrives at {service.locationDetail.destination[0].description}:{" "}
-          {service.locationDetail.destination[0].publicTime}
-        </li>
       </ul>
     </div>
   );

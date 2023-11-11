@@ -6,9 +6,9 @@ import SearchResults from "./SearchResults";
 const JourneySearchForm = () => {
   const initialState = {
     fields: {
-      origin_station: "",
-      destination_station: "",
-      time: "",
+      origin_station: "MAN",
+      destination_station: "LIV",
+      time: "12:00",
     },
   };
 
@@ -104,7 +104,7 @@ const JourneySearchForm = () => {
           Search
         </button>
       </form>
-      <SearchResults services={searchResults} />
+      {searchResults.length > 0 && <SearchResults services={searchResults} />}
     </div>
   );
 };
