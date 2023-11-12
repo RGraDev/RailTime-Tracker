@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../styles/JourneySearchForm.css";
 
 const JourneySearchForm = () => {
   const initialState = {
@@ -15,7 +16,7 @@ const JourneySearchForm = () => {
     for (let hour = 0; hour < 24; hour += 1) {
       for (let minute = 0; minute < 60; minute += 60) {
         const time = `${String(hour).padStart(2, "0")}:${String(
-          minute,
+          minute
         ).padStart(2, "0")}`;
         options.push(time);
       }
@@ -39,7 +40,7 @@ const JourneySearchForm = () => {
 
     const urlString = `${origin}/to/${destination}/${year}/${month}/${day}/${fields.time.replace(
       ":",
-      "",
+      ""
     )}`;
     console.log(urlString);
 
@@ -54,9 +55,10 @@ const JourneySearchForm = () => {
   };
 
   return (
-    <div className="SearchJournies">
-      <form onSubmit={handleSearchJournies}>
+    <div className="search-journies">
+      <form id="search-form" onSubmit={handleSearchJournies}>
         <select
+          className="select-option"
           id="origin_station"
           name="origin_station"
           value={fields.origin_station}
@@ -70,6 +72,7 @@ const JourneySearchForm = () => {
           </option>
         </select>
         <select
+          className="select-option"
           id="destination_station"
           name="destination_station"
           value={fields.destination_station}
@@ -83,6 +86,7 @@ const JourneySearchForm = () => {
           </option>
         </select>
         <select
+          className="select-option"
           id="time"
           name="time"
           value={fields.time}

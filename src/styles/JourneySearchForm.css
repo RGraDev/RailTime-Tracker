@@ -1,0 +1,29 @@
+.search-journies {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#search-form {
+  background-color: grey;
+  width: 30%;
+  /* margin: auto; */
+  border-radius: 10px;
+  max-width: 800px;
+  min-width: 200px;
+  padding: 10px;
+  text-align: center;
+}
+
+.select-option {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1.2rem auto;
+  padding: 0.25rem;
+}
+
+button {
+  text-align: center;
+}
