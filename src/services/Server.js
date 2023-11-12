@@ -1,7 +1,8 @@
+/* eslint-disable import/no-unresolved */
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.get("/api/external-data", (req, res) => {
     .get(apiURL, {
       headers: {
         Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString(
-          "base64",
+          "base64"
         )}`,
       },
     })
@@ -34,5 +35,3 @@ app.get("/api/external-data", (req, res) => {
 app.listen(3001, () => {
   console.log("Proxy server is running on port 3001");
 });
-
-
