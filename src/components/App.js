@@ -1,11 +1,18 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
-import React from "react";
+import { React, useState } from "react";
 import "../styles/App.css";
 import JourneySearchForm from "./JourneySearchForm";
 import trainImage from "../images/image.jpg";
+import ServiceDetails from "./ServiceDetails";
 
 const App = () => {
+  const [fields, setFields] = useState({
+    origin_station: "MAN",
+    destination_station: "LIV",
+    time: "13:00",
+  });
+
   return (
     <div className="App">
       <h2>Train Punctuality App</h2>
@@ -28,6 +35,9 @@ const App = () => {
         </article>
       </div>
       <JourneySearchForm />
+      <h1>Train Punctuality App</h1>
+      <JourneySearchForm fields={fields} setFields={setFields} />
+      <ServiceDetails fields={fields} />
     </div>
   );
 };

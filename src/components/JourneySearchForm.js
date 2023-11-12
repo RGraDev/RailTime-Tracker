@@ -1,16 +1,11 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-console */
 import React, { useState } from "react";
 import axios from "axios";
 import "../styles/JourneySearchForm.css";
+import SearchResults from "./SearchResults";
 
-const JourneySearchForm = () => {
-  const initialState = {
-    fields: {
-      origin_station: "",
-      destination_station: "",
-      time: "",
-    },
-  };
-
+const JourneySearchForm = ({ fields, setFields }) => {
   const generateTimeOptions = () => {
     const options = [];
     for (let hour = 0; hour < 24; hour += 1) {
@@ -26,7 +21,7 @@ const JourneySearchForm = () => {
 
   const timeOptions = generateTimeOptions();
 
-  const [fields, setFields] = useState(initialState.fields);
+  const [searchResults, setSearchResults] = useState([]);
 
   const handleSearchJournies = (event) => {
     event.preventDefault();
@@ -42,12 +37,15 @@ const JourneySearchForm = () => {
       ":",
       ""
     )}`;
-    console.log(urlString);
 
     axios
-      .get(`http://localhost:3001/api/external-data?pathParams=${urlString}`)
-      .then((response) => console.log(response.data))
-      .catch((error) => console.error(error));
+      .get(
+        `http://localhost:3001/api/external-data/get-services?pathParams=${urlString}`
+      )
+      .then((response) => {
+        setSearchResults(response.data.services);
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleFieldChange = (event) => {
@@ -65,10 +63,10 @@ const JourneySearchForm = () => {
           onChange={handleFieldChange}
         >
           <option key="LIV" value="LIV">
-            Liverpool
+            Liverpool Lime Street
           </option>
           <option key="MAN" value="MAN">
-            Manchester
+            Manchester Piccadilly
           </option>
         </select>
         <select
@@ -79,10 +77,10 @@ const JourneySearchForm = () => {
           onChange={handleFieldChange}
         >
           <option key="LIV" value="LIV">
-            Liverpool
+            Liverpool Lime Street
           </option>
           <option key="MAN" value="MAN">
-            Manchester
+            Manchester Piccadilly
           </option>
         </select>
         <select
@@ -102,6 +100,9 @@ const JourneySearchForm = () => {
           Search
         </button>
       </form>
+      {searchResults.length > 0 && (
+        <SearchResults services={searchResults} fields={fields} />
+      )}
     </div>
   );
 };
