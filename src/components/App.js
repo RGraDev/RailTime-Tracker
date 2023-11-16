@@ -20,7 +20,9 @@ const App = () => {
         setFields={setFields}
         setSearchResults={setSearchResults}
       />
-      <SearchResults services={searchResults} fields={fields} />
+      {searchResults.length > 0 && (
+        <SearchResults services={searchResults} fields={fields} />
+      )}
     </div>
   );
 };
