@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
-import SearchResults from "./SearchResults";
 
-const JourneySearchForm = ({ fields, setFields }) => {
+const JourneySearchForm = ({ fields, setFields, setSearchResults }) => {
   const generateTimeOptions = () => {
     const options = [];
     for (let hour = 0; hour < 24; hour += 1) {
@@ -18,8 +17,6 @@ const JourneySearchForm = ({ fields, setFields }) => {
   };
 
   const timeOptions = generateTimeOptions();
-
-  const [searchResults, setSearchResults] = useState([]);
 
   const handleSearchJournies = (event) => {
     event.preventDefault();
@@ -95,7 +92,6 @@ const JourneySearchForm = ({ fields, setFields }) => {
           Search
         </button>
       </form>
-      {searchResults.length > 0 && <SearchResults services={searchResults} fields={fields} />}
     </div>
   );
 };

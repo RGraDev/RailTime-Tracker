@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ServiceDetails = ({ fields, service }) => {
@@ -48,7 +48,7 @@ const ServiceDetails = ({ fields, service }) => {
     };
 
     fetchServiceDetails();
-  }, [service, fields.destination_station]);
+  }, [fields.destination_station, service]);
 
   if (!details) {
     return null;

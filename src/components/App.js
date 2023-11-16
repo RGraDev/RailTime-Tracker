@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import "../styles/App.css";
 import JourneySearchForm from "./JourneySearchForm";
-import ServiceDetails from "./ServiceDetails";
+import SearchResults from "./SearchResults";
 
 const App = () => {
   const [fields, setFields] = useState({
@@ -10,11 +10,17 @@ const App = () => {
     time: "13:00",
   });
 
+  const [searchResults, setSearchResults] = useState([]);
+
   return (
     <div className="App">
       <h1>Train Punctuality App</h1>
-      <JourneySearchForm fields={fields} setFields={setFields} />
-      <ServiceDetails fields={fields} />
+      <JourneySearchForm
+        fields={fields}
+        setFields={setFields}
+        setSearchResults={setSearchResults}
+      />
+      <SearchResults services={searchResults} fields={fields} />
     </div>
   );
 };
