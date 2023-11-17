@@ -6,6 +6,7 @@ import axios from "axios";
 const ServiceDetails = ({ fields, service }) => {
   const [details, setDetails] = useState(null);
 
+  // To format time values returned from the API
   const formatTime = (timeString) => {
     const hours = timeString.slice(0, 2);
     const minutes = timeString.slice(2);
