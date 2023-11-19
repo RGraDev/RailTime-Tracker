@@ -68,9 +68,10 @@ const ServiceDetails = ({ fields, service }) => {
     status = `Has not arrived yet`;
   } else if (realtimeArrival) {
     if (realtimeGbttArrivalLateness) {
-      status = `Actual Arrival: ${formatTime(
-        realtimeArrival,
-      )} (${realtimeGbttArrivalLateness} minutes late)`;
+      const lateness = realtimeGbttArrivalLateness;
+      status = `Actual Arrival: ${formatTime(realtimeArrival)} ${
+        lateness === 1 ? "minute" : "minutes"
+      } late (${lateness} ${lateness === 1 ? "minute" : "minutes"} late)`;
     } else {
       status = "On Time";
     }
