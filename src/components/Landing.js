@@ -6,7 +6,6 @@ const Landing = () => {
   return (
     <div className="landing-container">
       <div className="landing-content">
-        <h2>Welcome to RailTime Tracker</h2>
         <div className="landing-card">
           <img
             src="landing-image.jpg"
