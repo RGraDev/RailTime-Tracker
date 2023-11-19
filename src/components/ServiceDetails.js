@@ -67,16 +67,29 @@ const ServiceDetails = ({ fields, service }) => {
   if (realtimeArrivalActual === false) {
     status = `Has not arrived yet`;
   } else if (realtimeArrival) {
-    if (realtimeGbttArrivalLateness) {
+    if (realtimeGbttArrivalLateness !== undefined) {
       const lateness = realtimeGbttArrivalLateness;
-      status = `Actual Arrival: ${formatTime(realtimeArrival)} ${
-        lateness === 1 ? "minute" : "minutes"
-      } late (${lateness} ${lateness === 1 ? "minute" : "minutes"} late)`;
+      const arrivalTime = formatTime(realtimeArrival);
+
+      if (lateness === 0) {
+        status = "On Time";
+      } else {
+        const latenessText =
+          Math.abs(lateness) === 1
+            ? `${Math.abs(lateness)} minute`
+            : `${Math.abs(lateness)} minutes`;
+
+        if (lateness < 0) {
+          status = `Actual Arrival: ${arrivalTime} (${latenessText} early)`;
+        } else {
+          status = `Actual Arrival: ${arrivalTime} (${latenessText} late)`;
+        }
+      }
     } else {
       status = "On Time";
     }
   } else {
-    status = "Unexpected condition";
+    status = "I'm not quite sure what happened to this train!";
   }
 
   return (
