@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { React, useState } from "react";
 import "../styles/App.css";
 import JourneySearchForm from "./JourneySearchForm";
@@ -20,6 +22,10 @@ const App = () => {
     setInitialLoad(false);
   };
 
+  const handleHeaderClick = () => {
+    setInitialLoad(true);
+  };
+
   let contentComponent;
 
   if (initialLoad) {
@@ -35,7 +41,9 @@ const App = () => {
   return (
     <div className="App">
       <div className="header">
-        <h1>RailTime Tracker</h1>
+        <h1 onClick={handleHeaderClick} style={{ cursor: "pointer" }}>
+          RailTime Tracker
+        </h1>
         <JourneySearchForm
           fields={fields}
           setFields={setFields}
