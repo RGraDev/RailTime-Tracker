@@ -1,15 +1,25 @@
 // Landing.js
-import React from 'react';
-import '../styles/Landing.css'; 
+import React from "react";
+import "../styles/Landing.css";
 
 const Landing = () => {
   return (
     <div className="landing-container">
       <div className="landing-content">
-        <img src="/path/to/your/image.jpg" alt="RailTime App" className="landing-image" />
-        <div className="landing-text">
-          <h2>Welcome to RailTime Tracker</h2>
-          <p>Your go-to app for tracking train schedules and arrivals.</p>
+        <h2>Welcome to RailTime Tracker</h2>
+        <div className="landing-card">
+          <img
+            src="landing-image.jpg"
+            alt="RailTime App"
+            className="landing-image"
+          />
+          <div className="landing-text">
+            <p>
+              RailTime Tracker provides timetable information for rail services,
+              and provides data on the punctuality of those services.
+            </p>
+            <p>Use the search form above to get started!</p>
+          </div>
         </div>
       </div>
     </div>
