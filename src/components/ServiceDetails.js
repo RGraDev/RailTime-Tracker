@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../styles/ServiceDetails.css";
 
 const ServiceDetails = ({ fields, service }) => {
   const [details, setDetails] = useState(null);
@@ -74,12 +75,12 @@ const ServiceDetails = ({ fields, service }) => {
       status = "On Time";
     }
   } else {
-    status = "Unexpected condition"; // Adjust this according to your needs
+    status = "Unexpected condition";
   }
 
   return (
-    <div className="ServiceDetails">
-      <ul>
+    <div className="service-details-container">
+      <ul className="service-details">
         <li>{details.serviceUid}</li>
         <li>Service operated by {details.atocName}</li>
         <li>Timetabled Arrival: {formatTime(gbttBookedArrival)}</li>

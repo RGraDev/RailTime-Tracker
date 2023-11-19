@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Service from "./Service";
 import ServiceDetails from "./ServiceDetails";
+import "../styles/SearchResults.css";
 
 const SearchResults = ({ services, fields }) => {
   const [expandedIndices, setExpandedIndices] = useState([]);
@@ -13,15 +14,15 @@ const SearchResults = ({ services, fields }) => {
     );
   };
 
-  if (!services) {
+  if (services.length === 0) {
     return <p>No results found.</p>;
   }
 
   return (
-    <div className="SearchResults">
-      <h2>Search Results</h2>
+    <div className="search-results-container">
+      <h2>Good news! We found the following journies for you...</h2>
       {services.map((service, index) => (
-        <div key={service.serviceUid}>
+        <div key={service.serviceUid} className="result-item">
           <Service service={service} />
           <button type="button" onClick={() => handleExpand(index)}>
             {expandedIndices.includes(index)

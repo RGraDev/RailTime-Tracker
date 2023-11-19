@@ -14,13 +14,15 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Train Punctuality App</h1>
-      <JourneySearchForm
-        fields={fields}
-        setFields={setFields}
-        setSearchResults={setSearchResults}
-      />
-      {searchResults.length > 0 && (
+      <div className="header">
+        <h1>RailTime Tracker</h1>
+        <JourneySearchForm
+          fields={fields}
+          setFields={setFields}
+          setSearchResults={setSearchResults}
+        />
+      </div>
+      {searchResults && searchResults.length > 0 && (
         <SearchResults services={searchResults} fields={fields} />
       )}
     </div>

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React from "react";
 import axios from "axios";
+import "../styles/JourneySearchForm.css";
 
 const JourneySearchForm = ({ fields, setFields, setSearchResults }) => {
   const generateTimeOptions = () => {
@@ -48,46 +49,58 @@ const JourneySearchForm = ({ fields, setFields, setSearchResults }) => {
   };
 
   return (
-    <div className="SearchJournies">
-      <form onSubmit={handleSearchJournies}>
-        <select
-          id="origin_station"
-          name="origin_station"
-          value={fields.origin_station}
-          onChange={handleFieldChange}
-        >
-          <option key="LIV" value="LIV">
-            Liverpool Lime Street
-          </option>
-          <option key="MAN" value="MAN">
-            Manchester Piccadilly
-          </option>
-        </select>
-        <select
-          id="destination_station"
-          name="destination_station"
-          value={fields.destination_station}
-          onChange={handleFieldChange}
-        >
-          <option key="LIV" value="LIV">
-            Liverpool Lime Street
-          </option>
-          <option key="MAN" value="MAN">
-            Manchester Piccadilly
-          </option>
-        </select>
-        <select
-          id="time"
-          name="time"
-          value={fields.time}
-          onChange={handleFieldChange}
-        >
-          {timeOptions.map((time) => (
-            <option key={time} value={time}>
-              {time}
+    <div className="search-form-container">
+      <form className="search-form" onSubmit={handleSearchJournies}>
+        <label htmlFor="origin_station">
+          From:
+          <select
+            id="origin_station"
+            name="origin_station"
+            value={fields.origin_station}
+            onChange={handleFieldChange}
+          >
+            <option key="LIV" value="LIV">
+              Liverpool Lime Street
             </option>
-          ))}
-        </select>
+            <option key="MAN" value="MAN">
+              Manchester Piccadilly
+            </option>
+          </select>
+        </label>
+
+        <label htmlFor="destination_station">
+          To:
+          <select
+            id="destination_station"
+            name="destination_station"
+            value={fields.destination_station}
+            onChange={handleFieldChange}
+          >
+            <option key="LIV" value="LIV">
+              Liverpool Lime Street
+            </option>
+            <option key="MAN" value="MAN">
+              Manchester Piccadilly
+            </option>
+          </select>
+        </label>
+
+        <label htmlFor="time">
+          Time:
+          <select
+            id="time"
+            name="time"
+            value={fields.time}
+            onChange={handleFieldChange}
+          >
+            {timeOptions.map((time) => (
+              <option key={time} value={time}>
+                {time}
+              </option>
+            ))}
+          </select>
+        </label>
+
         <button type="submit" onClick={handleSearchJournies}>
           Search
         </button>
