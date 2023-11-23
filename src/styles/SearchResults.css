@@ -16,16 +16,3 @@
     padding: 10px;
     background-color: #fff; 
   }
-  
-  .result-item button {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    background-color: #00a99d;
-    color: #fff;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  
