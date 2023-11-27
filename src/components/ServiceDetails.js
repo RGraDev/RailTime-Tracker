@@ -6,12 +6,67 @@ import "../styles/ServiceDetails.css";
 
 const ServiceDetails = ({ fields, service }) => {
   const [details, setDetails] = useState(null);
+  const [averageDelay, setAverageDelay] = useState(null);
 
   // To format time values returned from the API
   const formatTime = (timeString) => {
     const hours = timeString.slice(0, 2);
     const minutes = timeString.slice(2);
     return `${hours}:${minutes}`;
+  };
+
+  const fetchAverageDelay = async () => {
+    if (!service || !service.serviceUid) {
+      console.error("Service or serviceUid is missing");
+      return;
+    }
+
+    const currentDate = new Date();
+
+    // Fetch delay for the previous 5 days
+    const delayPromises = Array.from({ length: 5 }, (_, index) => {
+      const date = new Date();
+      date.setDate(currentDate.getDate() - index - 1); // Subtract index days
+      const formattedDate = `${date.getFullYear()}/${
+        date.getMonth() + 1
+      }/${date.getDate()}`;
+
+      const id = service.serviceUid;
+      const pathParams = `${id}/${formattedDate}`;
+
+      console.log(`Sending request for average delay on ${formattedDate}`);
+
+      return axios.get(
+        `http://localhost:3001/api/external-data/get-details?pathParams=${pathParams}`,
+      );
+    });
+
+    try {
+      const responses = await Promise.all(delayPromises);
+
+      console.log("Received responses for average delay:", responses);
+
+      const delays = responses.map((response) => {
+        if (response.status === 404 || response.data === "No schedule found") {
+          console.log("Service didn't run on this day");
+          return 0;
+        }
+
+        const destinationLocation = response.data.locations?.find(
+          (location) => location.crs === fields.destination_station,
+        );
+
+        return destinationLocation?.realtimeGbttArrivalLateness || 0;
+      });
+
+      // Calculate average delay
+      const avgDelay =
+        delays.reduce((sum, delay) => sum + delay, 0) / delays.length;
+      setAverageDelay(Math.round(avgDelay));
+      console.log("Average Delay (Last 5 Days):", avgDelay);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -31,12 +86,16 @@ const ServiceDetails = ({ fields, service }) => {
 
       const pathParams = `${id}/${date}`;
 
+      console.log("Sending request for service details");
+
       axios
         .get(
           `http://localhost:3001/api/external-data/get-details?pathParams=${pathParams}`,
         )
         .then((response) => {
+          console.log("Received response for service details:", response.data);
           setDetails(response.data);
+          fetchAverageDelay(); // Fetch average delay after service details
         })
         .catch((error) => {
           console.error(error);
@@ -99,6 +158,9 @@ const ServiceDetails = ({ fields, service }) => {
         <li>Service operated by {details.atocName}</li>
         <li>Timetabled Arrival: {formatTime(gbttBookedArrival)}</li>
         <li>{status}</li>
+        {averageDelay !== null && (
+          <li>Average Delay (Last 5 Days): {averageDelay} minutes</li>
+        )}
       </ul>
     </div>
   );
