@@ -58,7 +58,7 @@ const ServiceDetails = ({ fields, service }) => {
 
       // Filter out responses where the service didn't run on a given day
       const validResponses = responses.filter((response) => {
-        if (response === null || response.data.error === "No schedule found") {
+        if (response === null) {
           console.log("Service didn't run on this day");
           return false;
         }
