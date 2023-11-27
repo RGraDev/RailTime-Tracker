@@ -41,20 +41,20 @@ const ServiceDetails = ({ fields, service }) => {
             response.data.error === "No schedule found"
           ) {
             console.log("Service didn't run on this day");
-            return null; // Exclude this response from the array
+            return null;
           }
           return response;
         })
         .catch((error) => {
           console.error(`Error fetching data for ${formattedDate}:`, error);
-          return null; // Exclude this response from the array
+          return null;
         });
     });
 
     try {
       const responses = await Promise.all(delayPromises);
 
-      console.log("Received responses for average delay:", responses);
+      console.log("Received responses: ", responses);
 
       // Filter out responses where the service didn't run on a given day
       const validResponses = responses.filter((response) => {
@@ -107,7 +107,7 @@ const ServiceDetails = ({ fields, service }) => {
         .then((response) => {
           console.log("Received response for service details:", response.data);
           setDetails(response.data);
-          fetchAverageDelay(); // Fetch average delay after service details
+          fetchAverageDelay();
         })
         .catch((error) => {
           console.error(error);
