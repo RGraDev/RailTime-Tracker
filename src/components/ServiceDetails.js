@@ -166,7 +166,6 @@ const ServiceDetails = ({ fields, service }) => {
   return (
     <div className="service-details-container">
       <ul className="service-details">
-        <li>{details.serviceUid}</li>
         <li>Service operated by {details.atocName}</li>
         <li>Timetabled Arrival: {formatTime(gbttBookedArrival)}</li>
         <li>{status}</li>
