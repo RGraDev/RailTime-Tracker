@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@700&family=Source+Code+Pro:wght@700&display=swap');
+
 .App {
   text-align: center;
 }
@@ -7,6 +9,10 @@
   padding: 20px;
   text-align: center;
   color: #fff;
+}
+
+.header h1 {
+  font-family: 'Source Code Pro', monospace;
 }
 
 .App-logo {
