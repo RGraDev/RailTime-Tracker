@@ -16,11 +16,6 @@ const ServiceDetails = ({ fields, service }) => {
   };
 
   const fetchAverageDelay = async () => {
-    if (!service || !service.serviceUid) {
-      console.error("Service or serviceUid is missing");
-      return;
-    }
-
     const currentDate = new Date();
 
     // Fetch delay for the previous 5 days
@@ -36,9 +31,24 @@ const ServiceDetails = ({ fields, service }) => {
 
       console.log(`Sending request for average delay on ${formattedDate}`);
 
-      return axios.get(
-        `http://localhost:3001/api/external-data/get-details?pathParams=${pathParams}`,
-      );
+      return axios
+        .get(
+          `http://localhost:3001/api/external-data/get-details?pathParams=${pathParams}`,
+        )
+        .then((response) => {
+          if (
+            response.status === 404 ||
+            response.data.error === "No schedule found"
+          ) {
+            console.log("Service didn't run on this day");
+            return null; // Exclude this response from the array
+          }
+          return response;
+        })
+        .catch((error) => {
+          console.error(`Error fetching data for ${formattedDate}:`, error);
+          return null; // Exclude this response from the array
+        });
     });
 
     try {
@@ -46,12 +56,16 @@ const ServiceDetails = ({ fields, service }) => {
 
       console.log("Received responses for average delay:", responses);
 
-      const delays = responses.map((response) => {
-        if (response.status === 404 || response.data === "No schedule found") {
+      // Filter out responses where the service didn't run on a given day
+      const validResponses = responses.filter((response) => {
+        if (response === null || response.data.error === "No schedule found") {
           console.log("Service didn't run on this day");
-          return 0;
+          return false;
         }
+        return true;
+      });
 
+      const delays = validResponses.map((response) => {
         const destinationLocation = response.data.locations?.find(
           (location) => location.crs === fields.destination_station,
         );
@@ -61,7 +75,10 @@ const ServiceDetails = ({ fields, service }) => {
 
       // Calculate average delay
       const avgDelay =
-        delays.reduce((sum, delay) => sum + delay, 0) / delays.length;
+        delays.length > 0
+          ? delays.reduce((sum, delay) => sum + delay, 0) / delays.length
+          : 0;
+
       setAverageDelay(Math.round(avgDelay));
       console.log("Average Delay (Last 5 Days):", avgDelay);
     } catch (error) {
@@ -71,11 +88,6 @@ const ServiceDetails = ({ fields, service }) => {
 
   useEffect(() => {
     const fetchServiceDetails = () => {
-      if (!service || !service.serviceUid) {
-        console.error("Service or serviceUid is missing");
-        return;
-      }
-
       const currentDate = new Date();
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth() + 1;
